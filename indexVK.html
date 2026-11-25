@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#111318">
+<title>VK Музыка — Музыкальный вайб</title>
+<style>
+:root{--bg:#111318;--surface:#1b1d24;--surface2:#242731;--surface3:#2c303b;--blue:#0077ff;--blue2:#2688ff;--text:#f4f5f7;--muted:#969ba8;--line:#30333d;--green:#5ed49a}
+*{box-sizing:border-box}body{margin:0;background:#090b10;color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;display:flex;justify-content:center;min-height:100vh;padding:24px 12px}
+.phone{width:402px;height:min(900px,calc(100vh - 48px));min-height:720px;background:var(--bg);border:1px solid #343844;border-radius:34px;overflow:hidden;position:relative;display:flex;flex-direction:column;box-shadow:0 30px 100px #000b}
+.status{height:31px;padding:8px 23px 0;display:flex;justify-content:space-between;font-size:12px;font-weight:650;color:#e8eaf0}
+.header{height:56px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid #252831}
+.logo{font-size:19px;font-weight:800;letter-spacing:-.5px}.logo-mark{color:#1685ff;font-size:23px;vertical-align:-2px;margin-right:5px}
+.profile{width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#7b8cff,#35b9e6);display:grid;place-items:center;font-size:13px;font-weight:750}
+main{flex:1;overflow:auto;padding:22px 19px 100px;scrollbar-width:none}main::-webkit-scrollbar{display:none}
+.screen{display:none}.screen.active{display:block}
+.eyebrow{font-size:10px;font-weight:800;letter-spacing:1.25px;color:#70aaff;text-transform:uppercase;margin:0 0 12px}
+h1{font-size:29px;line-height:1.1;letter-spacing:-1.1px;margin:0 0 9px;font-weight:780}h2{font-size:19px;letter-spacing:-.35px;margin:0;font-weight:730}
+.sub{font-size:13px;line-height:1.5;color:var(--muted);margin:0 0 20px}
+.hero{border-radius:22px;padding:19px;background:linear-gradient(125deg,#0759c9,#1679ed 56%,#4d65dc);position:relative;overflow:hidden;margin:19px 0 25px;min-height:178px}
+.hero:after{content:"♫";position:absolute;right:13px;top:-22px;font-size:148px;font-weight:900;color:#ffffff17;transform:rotate(12deg)}
+.hero .eyebrow{color:#d6e8ff;margin-bottom:10px}.hero h2{font-size:22px;line-height:1.13;max-width:230px}.hero p{font-size:12px;line-height:1.45;color:#e0edff;max-width:225px;margin:9px 0 15px}
+.btn{border:0;border-radius:12px;background:var(--blue);color:white;font-size:13px;font-weight:750;padding:13px 16px;cursor:pointer;transition:.15s}.btn:hover{background:var(--blue2)}.btn:active{transform:scale(.98)}.btn.secondary{background:#2b303b;color:#e9edf5;border:1px solid #414653}.btn.ghost{background:transparent;color:#83b9ff;border:1px solid #3c4a60}.btn.full{width:100%}.btn.small{padding:9px 12px;font-size:11px}
+.section-head{display:flex;align-items:center;justify-content:space-between;margin:22px 0 12px}.section-head small{font-size:11px;color:var(--muted)}
+.room-card{display:flex;align-items:center;gap:12px;background:var(--surface);border-radius:16px;padding:11px;margin-bottom:9px;border:1px solid #292c35}
+.cover{width:59px;height:59px;flex:none;border-radius:11px;display:grid;place-items:center;font-size:24px;background:linear-gradient(135deg,#f29c67,#bd527c)}.cover.c2{background:linear-gradient(135deg,#45a6aa,#4355a8)}.cover.c3{background:linear-gradient(135deg,#9468df,#dc6ba0)}
+.room-info{min-width:0;flex:1}.room-info b{display:block;font-size:13px;margin-bottom:5px}.room-info span{font-size:11px;color:var(--muted)}
+.tag{font-size:10px;color:#a9cfff;background:#172d4c;border-radius:20px;padding:5px 8px;white-space:nowrap}
+.nav{position:absolute;bottom:0;left:0;right:0;height:70px;background:#171920f2;backdrop-filter:blur(18px);border-top:1px solid #2b2e38;display:flex;justify-content:space-around;align-items:center}
+.nav button{border:0;background:none;color:#858b99;font-size:10px;cursor:pointer;min-width:55px}.nav strong{display:block;font-size:19px;margin-bottom:3px;font-weight:500}.nav .active{color:#4b9bff}
+.back{border:0;background:transparent;color:#8ebcff;padding:0 0 18px;font-size:13px;cursor:pointer}
+.field-label{display:block;color:#c5c9d2;font-size:12px;margin:18px 0 8px}.field{width:100%;background:#1b1e26;border:1px solid #393e4a;border-radius:12px;padding:14px;color:#fff;font-size:13px;outline:none}.field:focus{border-color:#328bff}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0 23px}.chip{background:#20232c;border:1px solid #3a3e49;color:#d2d6df;border-radius:20px;padding:9px 11px;font-size:11px;cursor:pointer}.chip.selected{background:#123c70;border-color:#278bff;color:#ddecff}
+.info{background:#1b202b;border:1px solid #303744;border-radius:14px;padding:13px;font-size:11px;line-height:1.5;color:#b4bdcc;margin:15px 0}
+.invite{display:flex;align-items:center;gap:9px;padding:12px;background:#1b202b;border:1px solid #333b49;border-radius:13px;margin:17px 0}.invite code{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;color:#a8cfff;font-size:11px}
+.members{display:flex;align-items:center;gap:9px;margin:13px 0 20px}.member{width:31px;height:31px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700;background:linear-gradient(135deg,#e58d9e,#8659bf);border:2px solid var(--bg);margin-right:-5px}.member.m2{background:linear-gradient(135deg,#62c2c8,#4563c4)}.member.m3{background:linear-gradient(135deg,#e8aa5e,#b45c7e)}.member.add{background:#242a36;border:1px dashed #62718b;color:#b7d5ff;cursor:pointer;font-size:18px}
+.member-label{font-size:11px;color:var(--muted);margin-left:5px}
+.track{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #292d36}.track-art{width:43px;height:43px;border-radius:9px;display:grid;place-items:center;flex:none;font-size:18px;background:linear-gradient(135deg,#ee9868,#9e4d91)}.track:nth-child(2) .track-art{background:linear-gradient(135deg,#55b6b0,#4355a7)}.track:nth-child(3) .track-art{background:linear-gradient(135deg,#d5a54d,#a64e66)}.track:nth-child(4) .track-art{background:linear-gradient(135deg,#6676d9,#a65db5)}
+.track-info{flex:1;min-width:0}.track-info b{display:block;font-size:12px;font-weight:650}.track-info span{display:block;font-size:10px;color:var(--muted);margin-top:4px}
+.vote{border:1px solid #424957;background:#202630;color:#b8c4d6;border-radius:18px;padding:6px 8px;font-size:10px;cursor:pointer}.vote.voted{background:#123b31;color:#77e0b0;border-color:#2d8061}
+.track-add{width:29px;height:29px;border-radius:50%;border:1px solid #465164;background:#202630;color:#b9d6ff;font-size:18px;cursor:pointer}
+.tabs{display:flex;background:#20232b;border-radius:11px;padding:3px;margin:15px 0}.tabs button{flex:1;border:0;background:transparent;color:#9ba2b0;border-radius:9px;padding:9px 5px;font-size:11px;cursor:pointer}.tabs button.active{background:#3a414e;color:white}
+.player{margin-top:17px;background:#1b202b;border:1px solid #343b48;border-radius:15px;padding:12px}.player-top{display:flex;align-items:center;gap:10px}.player-art{width:40px;height:40px;border-radius:8px;background:linear-gradient(135deg,#e99b67,#a84c91);display:grid;place-items:center}.player-top b{font-size:11px}.player-top small{display:block;color:var(--muted);font-size:10px;margin-top:3px}.progress{height:3px;border-radius:4px;background:#3a414d;margin:13px 0 8px}.progress i{display:block;width:34%;height:100%;background:#328bff;border-radius:4px}.controls{display:flex;justify-content:center;gap:26px;font-size:17px;color:#dce4f1}
+.empty{border:1px dashed #454d5c;border-radius:16px;padding:22px 15px;text-align:center;color:#9ca6b7;font-size:12px;line-height:1.5;margin:15px 0}.empty b{display:block;color:#e6eaf2;font-size:14px;margin-bottom:6px}
+.toast{position:absolute;bottom:82px;left:18px;right:18px;background:#eef4ff;color:#17243a;padding:12px 14px;border-radius:12px;font-size:12px;font-weight:700;text-align:center;display:none;box-shadow:0 8px 30px #0009}
+.small-note{font-size:10px;line-height:1.5;color:#828b9b;margin-top:12px}
+</style>
+</head>
+<body>
+<div class="phone">
+ <div class="status"><span>9:41</span><span>●●●　▰</span></div>
+ <header class="header"><div class="logo"><span class="logo-mark">♫</span>VK Музыка</div><div class="profile">А</div></header>
+ <main id="main">
+  <section class="screen active" id="home">
+   <div class="eyebrow">СЛУШАЙТЕ ВМЕСТЕ</div>
+   <h1>У каждого свой вкус.<br>Музыка — одна.</h1>
+   <p class="sub">Создайте комнату с друзьями и соберите плейлист, который понравится всем.</p>
+   <div class="hero"><div class="eyebrow">НОВОЕ · МУЗЫКАЛЬНЫЙ ВАЙБ</div><h2>Ваш общий саундтрек</h2><p>Объединяйте любимые треки, открывайте новое и решайте, что играет дальше.</p><button class="btn" onclick="show('create')">Создать комнату&nbsp; →</button></div>
+   <div class="section-head"><h2>Недавно слушали</h2><small>Все комнаты</small></div>
+   <div class="room-card"><div class="cover">🌆</div><div class="room-info"><b>Дорога с ребятами</b><span>4 участника · 28 треков</span></div><span class="tag">Вчера</span></div>
+   <div class="room-card"><div class="cover c2">☀️</div><div class="room-info"><b>Летний вайб</b><span>3 участника · 16 треков</span></div><span class="tag">12 мая</span></div>
+   <div class="info">Музыкальные комнаты — новый способ делиться любимыми треками и слушать музыку вместе.</div>
+  </section>
+  <section class="screen" id="create">
+   <button class="back" onclick="show('home')">← Назад</button><div class="eyebrow">СОЗДАНИЕ КОМНАТЫ · 1/2</div>
+   <h1>Как назовём<br>ваш вайб?</h1><p class="sub">Название и настроение помогут друзьям понять, что вы собираетесь слушать.</p>
+   <label class="field-label">Название комнаты</label><input class="field" id="roomName" value="Вечерняя тусовка" maxlength="32">
+   <label class="field-label">Выберите настроение</label>
+   <div class="chips"><button class="chip selected" onclick="pick(this)">✨ Без ограничений</button><button class="chip" onclick="pick(this)">🎉 Вечеринка</button><button class="chip" onclick="pick(this)">🌴 Чилл</button><button class="chip" onclick="pick(this)">🚗 В дорогу</button><button class="chip" onclick="pick(this)">🎸 Новое и любимое</button></div>
+   <button class="btn full" onclick="createRoom()">Создать комнату →</button>
+   <div class="info">Вы сможете пригласить до 8 участников. Комната доступна только по приглашению.</div>
+  </section>
+  <section class="screen" id="room">
+   <button class="back" onclick="show('home')">← Мои комнаты</button><div class="eyebrow">ВАША КОМНАТА · ОНЛАЙН</div>
+   <h1 id="roomTitle">Вечерняя тусовка</h1><p class="sub">Добавляйте музыку и выбирайте, что будет играть дальше.</p>
+   <div class="invite"><span>🔗</span><code>vk.com/music/vibe/8f2k9</code><button class="btn secondary small" onclick="toast('Ссылка скопирована — отправь её друзьям')">Копировать</button></div>
+   <div class="section-head"><h2>Участники</h2><small id="memberCount">3 из 8</small></div>
+   <div class="members"><div class="member">А</div><div class="member m2">М</div><div class="member m3">И</div><button class="member add" onclick="toast('Отправь ссылку-приглашение друзьям')">＋</button><span class="member-label">Вы и друзья</span></div>
+   <div class="section-head"><h2>Общий плейлист</h2><small id="trackCount">4 трека</small></div>
+   <div class="tabs"><button class="active" onclick="switchTab(this,'queue')">Очередь</button><button onclick="switchTab(this,'popular')">Популярное</button></div>
+   <div id="tracks">
+    <div class="track"><div class="track-art">🎧</div><div class="track-info"><b>Midnight City</b><span>M83 · добавила Аня</span></div><button class="vote" onclick="vote(this)">♡ 3</button></div>
+    <div class="track"><div class="track-art">🌊</div><div class="track-info"><b>Плачу на техно</b><span>Моя Мишель · добавил Макс</span></div><button class="vote" onclick="vote(this)">♡ 2</button></div>
+    <div class="track"><div class="track-art">🌅</div><div class="track-info"><b>Sunset Lover</b><span>Petit Biscuit · добавила Ира</span></div><button class="vote" onclick="vote(this)">♡ 2</button></div>
+    <div class="track"><div class="track-art">💜</div><div class="track-info"><b>Afterglow</b><span>Ed Sheeran · добавила Аня</span></div><button class="vote" onclick="vote(this)">♡ 1</button></div>
+   </div>
+   <button class="btn full" style="margin-top:17px" onclick="show('add')">＋ Добавить свой трек</button>
+   <div class="player"><div class="player-top"><div class="player-art">🎵</div><div><b>Сейчас играет · Общая очередь</b><small>Midnight City — M83</small></div></div><div class="progress"><i></i></div><div class="controls"><span>⏮</span><span onclick="toast('Плеер — демонстрация интерфейса')">▶</span><span>⏭</span></div></div>
+   <p class="small-note">Голосование помогает участникам выбрать следующий трек. В реальном продукте очередь синхронизируется между устройствами.</p>
+  </section>
+  <section class="screen" id="add">
+   <button class="back" onclick="show('room')">← В комнату</button><div class="eyebrow">ВАШ ВКЛАД В ОБЩИЙ ВАЙБ</div>
+   <h1>Добавь трек,<br>который любят</h1><p class="sub">Выбери песню из рекомендаций или найди её по названию.</p>
+   <input class="field" placeholder="⌕  Найти трек или исполнителя" oninput="filterTracks(this.value)">
+   <div class="section-head"><h2>Может подойти всем</h2><small>Подборка для комнаты</small></div>
+   <div id="suggestions">
+    <div class="track"><div class="track-art">🎧</div><div class="track-info"><b>Midnight City</b><span>M83</span></div><button class="track-add" onclick="addTrack(this,'Midnight City','M83')">＋</button></div>
+    <div class="track"><div class="track-art">🌊</div><div class="track-info"><b>Waves</b><span>Mr. Probz</span></div><button class="track-add" onclick="addTrack(this,'Waves','Mr. Probz')">＋</button></div>
+    <div class="track"><div class="track-art">🌅</div><div class="track-info"><b>Sunset Lover</b><span>Petit Biscuit</span></div><button class="track-add" onclick="addTrack(this,'Sunset Lover','Petit Biscuit')">＋</button></div>
+    <div class="track"><div class="track-art">💜</div><div class="track-info"><b>Afterglow</b><span>Ed Sheeran</span></div><button class="track-add" onclick="addTrack(this,'Afterglow','Ed Sheeran')">＋</button></div>
+   </div>
+   <div class="empty" id="noResults" style="display:none"><b>Ничего не найдено</b>Попробуйте изменить запрос</div>
+   <p class="small-note">Рекомендации демонстрационные. В продукте они формируются на основе музыкальных предпочтений участников комнаты.</p>
+  </section>
+ </main>
+ <nav class="nav"><button><strong>⌂</strong>Главная</button><button><strong>⌕</strong>Поиск</button><button class="active"><strong>♫</strong>Музыка</button><button><strong>♡</strong>Коллекция</button></nav>
+ <div class="toast" id="toast"></div>
+</div>
+<script>
+function show(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');document.getElementById('main').scrollTop=0}
+function pick(el){document.querySelectorAll('.chips .chip').forEach(x=>x.classList.remove('selected'));el.classList.add('selected')}
+function createRoom(){let name=document.getElementById('roomName').value.trim()||'Мой музыкальный вайб';document.getElementById('roomTitle').textContent=name;show('room');toast('Комната создана — приглашай друзей!')}
+function toast(msg){let t=document.getElementById('toast');t.textContent=msg;t.style.display='block';clearTimeout(window.toastTimer);window.toastTimer=setTimeout(()=>t.style.display='none',2300)}
+function vote(btn){if(btn.classList.contains('voted')){btn.classList.remove('voted');let n=Number(btn.textContent.match(/\d+/)[0])-1;btn.textContent='♡ '+Math.max(0,n);toast('Голос отменён')}else{btn.classList.add('voted');let n=Number(btn.textContent.match(/\d+/)[0])+1;btn.textContent='♥ '+n;toast('Голос учтён')}}
+function addTrack(btn,title,artist){btn.textContent='✓';btn.disabled=true;btn.style.color='#68dca4';let row=document.createElement('div');row.className='track';let art=document.createElement('div');art.className='track-art';art.textContent='🎶';let info=document.createElement('div');info.className='track-info';let b=document.createElement('b');b.textContent=title;let s=document.createElement('span');s.textContent=artist+' · добавили вы';info.append(b,s);let tag=document.createElement('span');tag.className='tag';tag.textContent='Новый';row.append(art,info,tag);document.getElementById('tracks').append(row);document.getElementById('trackCount').textContent=document.querySelectorAll('#tracks .track').length+' трека';toast('Трек добавлен в общий плейлист')}
+function filterTracks(q){let rows=[...document.querySelectorAll('#suggestions .track')],visible=0;rows.forEach(r=>{let yes=r.textContent.toLowerCase().includes(q.toLowerCase());r.style.display=yes?'flex':'none';if(yes)visible++});document.getElementById('noResults').style.display=visible?'none':'block'}
+function switchTab(btn,tab){document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));btn.classList.add('active');if(tab==='popular'){toast('Сортировка по голосам участников');let rows=[...document.querySelectorAll('#tracks .track')];rows.sort((a,b)=>Number((b.querySelector('.vote')?.textContent||'0').match(/\d+/)?.[0]||0)-Number((a.querySelector('.vote')?.textContent||'0').match(/\d+/)?.[0]||0));rows.forEach(r=>document.getElementById('tracks').append(r))}else{toast('Показана очередь добавления')}}
+</script>
+</body></html>
